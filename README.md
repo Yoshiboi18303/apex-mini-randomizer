@@ -6,7 +6,7 @@ A rewrite of my Angular application, moved from Angular to React (for new users,
 
 ## How to access
 
-**Web app link coming soon**
+You can access the site [here](https://yoshiboi18303.github.io/apex-mini-randomizer/)
 
 ---
 
