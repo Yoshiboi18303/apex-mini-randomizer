@@ -1,25 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ApexLegendChooser from "./components/ApexLegendChooser";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1 className="big-text m-5px">Welcome!</h1>
+      <h2 className="description">
+        Here you can enjoy letting our "<em>very powerful algorithm</em>" decide
+        what Legend you play as in Apex Legends!
+      </h2>
+      <ApexLegendChooser />
+    </>
   );
 }
 
