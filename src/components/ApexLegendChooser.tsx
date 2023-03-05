@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { getRandomLegend, getLegendType } from "../utils/";
+import { getRandomLegend, getLegendType, Legend } from "../utils/";
 
 export default function ApexLegendChooser(): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
     Array(5).fill(true)
   );
-  const [selectedLegend, setSelectedLegend] = useState<string | null>(null);
+  const [selectedLegend, setSelectedLegend] = useState<Legend | null>(null);
 
   function invertSelected(index: number): void {
     const newAllowedTypes = [...allowedTypes];
@@ -16,27 +16,41 @@ export default function ApexLegendChooser(): JSX.Element {
   return (
     <>
       {selectedLegend && (
-        <h2 className="big-text legend-name m-5px">{selectedLegend}</h2>
+        <div>
+          <h2 className="big-text legend-name m-5px">{selectedLegend.name}</h2>
+          <a href={selectedLegend.infoURL} className="description link">
+            {selectedLegend.name}'s Info
+          </a>
+        </div>
       )}
-      {allowedTypes.map((type, index) => {
-        return type ? (
-          <button
-            key={index}
-            className="active"
-            onClick={() => invertSelected(index)}
-          >
-            {getLegendType(index)}
-          </button>
-        ) : (
-          <button
-            key={index}
-            className="inactive"
-            onClick={() => invertSelected(index)}
-          >
-            {getLegendType(index)}
-          </button>
-        );
-      })}
+      <br />
+      <div className="types">
+        {allowedTypes.map((type, index) => {
+          return type ? (
+            <div key={getLegendType(index)} className="type">
+              <h3 className="legend-type">{getLegendType(index)}</h3>
+              <button
+                key={index}
+                className="active"
+                onClick={() => invertSelected(index)}
+              >
+                Active
+              </button>
+            </div>
+          ) : (
+            <div key={getLegendType(index)} className="type">
+              <h3 className="legend-type">{getLegendType(index)}</h3>
+              <button
+                key={index}
+                className="inactive"
+                onClick={() => invertSelected(index)}
+              >
+                Inactive
+              </button>
+            </div>
+          );
+        })}
+      </div>
       <br />
       <button
         className="activator m-5px"

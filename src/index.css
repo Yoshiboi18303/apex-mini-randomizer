@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap");
 
@@ -14,14 +13,17 @@ body {
 }
 
 h1 {
-  font-family: "Climate Crisis", cursive;
+  font-family: cursive;
 }
 
-button,
 .m-5px {
   margin: 5px;
+}
+
+button {
   font-family: "Roboto Mono", monospace;
   font-size: 150%;
+  color: white;
 }
 
 .active {
@@ -55,4 +57,40 @@ button,
 
 .legend-name {
   font-family: "Oswald", sans-serif;
+}
+
+.activator {
+  border: 3px solid rgb(255, 44, 44);
+  border-radius: 8px;
+  background-color: rgb(253, 68, 68);
+  transition-duration: 1s;
+  color: black;
+}
+
+.activator:hover {
+  cursor: pointer;
+  background-color: rgb(255, 44, 44);
+  color: white;
+}
+
+.legend-type {
+  font-family: "Roboto Mono", monospace;
+}
+
+.types {
+  display: flex;
+}
+
+.type {
+  flex: 0.5;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
