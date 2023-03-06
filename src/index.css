@@ -20,6 +20,14 @@ h1 {
   margin: 5px;
 }
 
+.m-30px {
+  margin: 30px;
+}
+
+.mb-30px {
+  margin-bottom: 30px;
+}
+
 button {
   font-family: "Roboto Mono", monospace;
   font-size: 150%;

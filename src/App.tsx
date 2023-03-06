@@ -1,5 +1,6 @@
 import React from "react";
 import ApexLegendChooser from "./components/ApexLegendChooser";
+import WeaponChooser from "./components/WeaponChooser";
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
         what Legend you play as in Apex Legends!
       </h2>
       <ApexLegendChooser />
+      <hr className="m-30px" />
+      <WeaponChooser />
     </>
   );
 }
