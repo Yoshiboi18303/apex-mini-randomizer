@@ -6,14 +6,29 @@ export interface Legend {
 }
 
 type AmmoType = "light" | "heavy" | "energy" | "sniper" | "shotgun" | "mythic";
+type LootTier = "basic" | "mid" | "high" | "none";
 
-export const ammoTypes: string[] = ["Light", "Heavy", "Energy", "Sniper", "Shotgun"]
+// No changes to the array below should be made within the code (e.g. pushing, popping, shifting),
+// That's why we call Object.freeze() here
+export const ammoTypes = Object.freeze(["Light", "Heavy", "Energy", "Sniper", "Shotgun"]);
 
 export interface Weapon {
     name: string;
     infoURL: string;
     ammoType: AmmoType;
     isCarePackageWeapon: boolean;
+}
+
+export interface Location {
+    name: string;
+    lootTier: LootTier;
+    shownOnMap: boolean;
+}
+
+export interface ApexMap {
+    name: string;
+    imageURL: string;
+    locations: Location[];
 }
 
 function getWikiURL(legendOrWeaponName: string): string {
@@ -35,6 +50,22 @@ function addWeapon(weaponName: string, ammoType: AmmoType, isCarePackageWeapon: 
         ammoType,
         infoURL: getWikiURL(weaponName),
         isCarePackageWeapon,
+    }
+}
+
+function addLocation(name: string, lootTier: LootTier, shownOnMap: boolean): Location {
+    return {
+        name,
+        lootTier,
+        shownOnMap,
+    }
+}
+
+function addMap(name: string, imageURL: string, locations: Location[]): ApexMap {
+    return {
+        name,
+        imageURL,
+        locations,
     }
 }
 
@@ -74,7 +105,7 @@ const legendMap = new Map<number, Legend[]>([
     ]]
 ])
 
-const legendTypes = ["Assault", "Skirmisher", "Recon", "Support", "Controller"];
+const legendTypes = Object.freeze(["Assault", "Skirmisher", "Recon", "Support", "Controller"]);
 
 const weaponMap = new Map<number, Weapon[]>([
     [0, [
@@ -119,6 +150,31 @@ const weaponMap = new Map<number, Weapon[]>([
         addWeapon("Kraber", "mythic", true),
         addWeapon("RE-45 Auto", "mythic", true),
     ]] // Mythic Ammo
+])
+
+const allMaps = new Map<number, ApexMap>([
+    [0, addMap("Kings Canyon", "https://static.wikia.nocookie.net/apexlegends_gamepedia_en/images/d/d5/Transition_Kings_Canyon_MU3.png", [
+        addLocation("Airbase", "high", true),
+        addLocation("ARES Capacitor", "mid", true),
+        addLocation("Artillery Battery", "high", true),
+        addLocation("Artillery Underpass", "basic", false),
+        addLocation("Basin", "high", false),
+        addLocation("Broken Coast", "basic", false),
+        addLocation("Broken Coast Overlook", "mid", false),
+        addLocation("Broken Coast South", "basic", false),
+        addLocation("Broken Relay", "none", false),
+        addLocation("Bunker Pass", "high", true),
+        addLocation("Cable Suspension", "basic", false),
+        addLocation("Cage", "mid", true),
+        addLocation("Cage Crossing", "basic", false),
+        addLocation("Capacitor Junction", "basic", false),
+        addLocation("Capacitor Overlook", "mid", false),
+        addLocation("Capacitor Tunnel", "basic", false),
+        addLocation("Caustic Treatment", "high", true),
+        addLocation("Caves", "basic", false),
+        addLocation("Crashed Ship", "high", false),
+        addLocation("Crash Site", "high", true)
+    ])]
 ])
 
 function getMessage(allowedTypes: Array<any>) {
@@ -184,4 +240,49 @@ export function invertArrayValue(index: number, set: React.Dispatch<React.SetSta
 
 export function invertValue(set: React.Dispatch<React.SetStateAction<boolean>>): void {
     set(prev => !prev)
+}
+
+export function getAmmoType(type: AmmoType): string {
+    switch (type) {
+        case "light":
+            return ammoTypes[0];
+        case "heavy":
+            return ammoTypes[1];
+        case "energy":
+            return ammoTypes[2];
+        case "sniper":
+            return ammoTypes[3];
+        case "shotgun":
+            return ammoTypes[4];
+        case "mythic":
+            return "Mythic";
+    }
+}
+
+export function getLootTier(lootTier: LootTier): string {
+    switch (lootTier) {
+        case "basic":
+            return "Basic-tier Loot";
+        case "mid":
+            return "Mid-tier Loot";
+        case "high":
+            return "High-tier Loot";
+        default:
+            return "No Loot In Area";
+    }
+}
+
+export function getMapArray(set: React.Dispatch<React.SetStateAction<ApexMap[]>> | null = null): ApexMap[] {
+    const mapArray = Array.from(allMaps.values());
+    if (set) set(mapArray);
+    return mapArray;
+}
+
+export function getLandingPoint(mapIndex: number, locationsOnMapOnly: boolean): Location | null {
+    const map = allMaps.get(mapIndex);
+
+    if (map) {
+        const locations = locationsOnMapOnly ? map.locations.filter(location => location.shownOnMap === true) : map.locations;
+        return locations[Math.floor(Math.random() * locations.length)];
+    } else return null;
 }

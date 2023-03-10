@@ -43,5 +43,11 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://yoshiboi18303.github.io/apex-mini-randomizer"
+  "homepage": "https://yoshiboi18303.github.io/apex-mini-randomizer",
+  "description": "A rewrite of my Angular application, moved from Angular to React (for new users, this is a web app that chooses a Legend for you to play as in Apex Legends).",
+  "main": "index.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
