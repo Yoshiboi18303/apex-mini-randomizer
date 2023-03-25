@@ -1,6 +1,6 @@
 # Apex Mini-Randomizer
 
-A rewrite of my Angular application, moved from Angular to React (for new users, this is a web app that chooses a Legend for you to play as in Apex Legends).
+A rewrite of my Angular application, moved from Angular to React (for new users, this is a web app that has multiple randomizer for the game **`Apex Legends`**).
 
 ---
 
@@ -20,15 +20,11 @@ You can access the site [here](https://yoshiboi18303.github.io/apex-mini-randomi
 
 You will also need knowledge of `JSX`, **HTML**, **CSS** and `TypeScript` (previous **JavaScript** knowledge can work too!)
 
-> **Note:** **Bolded** prerequisites are required.
+> **Note:** _**Bolded**_ prerequisites are required.
 
 ### Clone the repository
 
-Run `git clone https://github.com/Yoshiboi18303/apex-mini-randomizer` in your terminal
-
-> Want the development branch?
->
-> That's also available! Run `git clone -b dev https://github.com/Yoshiboi18303/apex-mini-randomizer` to clone the development branch.
+Run `git clone https://github.com/Yoshiboi18303/apex-mini-randomizer` in your terminal.
 
 ---
 

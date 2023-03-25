@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  getRandomLegend,
+  setRandomLegend,
   getLegendType,
   Legend,
   invertArrayValue,
@@ -13,28 +13,32 @@ export default function ApexLegendChooser(): JSX.Element {
   const [selectedLegend, setSelectedLegend] = useState<Legend | null>(null);
 
   return (
-    <>
+    <div>
       {selectedLegend && (
-        <div>
-          <h2 className="big-text legend-name m-5px">{selectedLegend.name}</h2>
-          <a
-            href={selectedLegend.infoURL}
-            className="description link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {selectedLegend.name}'s Info
-          </a>
-        </div>
+        <>
+          <div>
+            <h2 className="big-text legend-name m-5px">
+              {selectedLegend.name}
+            </h2>
+            <a
+              href={selectedLegend.infoURL}
+              className="description link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selectedLegend.name}'s Info
+            </a>
+          </div>
+          <br />
+        </>
       )}
-      <br />
       <div className="types">
         {allowedTypes.map((type, index) => {
           return (
             <div key={getLegendType(index)} className="type">
               <h3 className="legend-type">{getLegendType(index)}</h3>
               <button
-                key={index}
+                type="button"
                 className={type ? "active" : "inactive"}
                 onClick={() => invertArrayValue(index, setAllowedTypes)}
               >
@@ -46,11 +50,12 @@ export default function ApexLegendChooser(): JSX.Element {
       </div>
       <br />
       <button
+        type="button"
         className="activator m-5px"
-        onClick={() => setSelectedLegend(getRandomLegend(allowedTypes))}
+        onClick={() => setRandomLegend(allowedTypes, setSelectedLegend)}
       >
         Select Legend
       </button>
-    </>
+    </div>
   );
 }

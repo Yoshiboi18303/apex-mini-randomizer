@@ -1,6 +1,6 @@
 {
   "name": "apex-randomizer",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -43,5 +43,11 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://yoshiboi18303.github.io/apex-mini-randomizer"
+  "homepage": "https://yoshiboi18303.github.io/apex-mini-randomizer",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "eslint-plugin-react": "^7.32.2"
+  }
 }

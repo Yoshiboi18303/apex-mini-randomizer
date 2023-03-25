@@ -23,3 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 temp/
+.env
+
+# Visual Studio Code
+.vscode/
+
+# Will be pushed later
+CONTRIBUTING.md

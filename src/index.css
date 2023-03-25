@@ -102,3 +102,36 @@ button {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.background {
+  position: absolute;
+  z-index: -1;
+}
+
+button.selected-map::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(77, 77, 77, 0.4);
+  z-index: 1;
+}
+
+.button-text {
+  position: absolute;
+  z-index: 2;
+}
+
+img.selected-map-image::before {
+  filter: blur(2px);
+}
+
+.error-banner-container {
+  background-color: red;
+}
+
+.error-banner-text {
+  font-size: larger;
+  font-family: "Roboto Mono", monospace;
+}
