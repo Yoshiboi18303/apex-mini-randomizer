@@ -19,8 +19,11 @@ export default function LandingPointChooser(): JSX.Element {
       {chosenPoint && (
         <div>
           <h2 className="big-text legend-name m-5px">{chosenPoint.name}</h2>
-          <h3 className="description m-5px">
-            {getLootTier(chosenPoint.lootTier)}
+          <h3 className="description">{getLootTier(chosenPoint.lootTier)}</h3>
+          <h3 className="description">
+            {chosenPoint.shownOnMap
+              ? "Is Shown on In-Game Map"
+              : "Is Not Shown on In-Game Map"}
           </h3>
         </div>
       )}

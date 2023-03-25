@@ -6,7 +6,7 @@ type Images = {
         [key: string]: string;
     }
 }
-type AmmoType = "light" | "heavy" | "energy" | "sniper" | "shotgun" | "mythic" | "none";
+export type AmmoType = "light" | "heavy" | "energy" | "sniper" | "shotgun" | "mythic" | "none";
 type LootTier = "basic" | "mid" | "high" | "none" | "unknown";
 type MathOperator = "less" | "lessOrEqual" | "equal" | "greater" | "greaterOrEqual";
 type ConsequenceSeverity = "low" | "medium" | "high";

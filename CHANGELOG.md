@@ -14,6 +14,28 @@ Please also note that I may leave out some small details, I'm not very good at d
 
 ---
 
+## Version 0.3.1
+
+**Changes some components and moves a piece of logic into a separate component.**
+
+This is a very minor update, so there's not a _lot_ to document, but let's get started.
+
+### Additions
+
+None!
+
+### Changes
+
+**Changed:** `LandingPointChooser` component now renders some extra text about whether or not the chosen landing point is on the in-game map.
+
+**Changed:** Weapon info has been moved from the `WeaponChooser` component to the `WeaponInfo` component, and the `WeaponChooser` component now renders that component for weapon information.
+
+### Bug Fixes
+
+No bugs whatsoever, hooray!
+
+---
+
 ## Version 0.2.1
 
 **Adds a cool new randomizer which chooses a landing point for you to drop into, as well as some changes and bug fixes!**

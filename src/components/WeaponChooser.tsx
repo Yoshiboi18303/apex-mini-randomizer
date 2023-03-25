@@ -5,8 +5,8 @@ import {
   invertArrayValue,
   invertValue,
   ammoTypes,
-  getAmmoType,
 } from "../utils/";
+import WeaponInfo from "./WeaponInfo";
 
 export default function WeaponChooser(): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
@@ -14,7 +14,6 @@ export default function WeaponChooser(): JSX.Element {
   );
   const [carePackageWeaponsAllowed, setCarePackageWeaponsAllowed] =
     useState(false);
-  const [showWeaponAmmoType, setShowWeaponAmmoType] = useState(false);
   const [selectedLoadout, setSelectedLoadout] = useState<Weapon[] | null>(null);
 
   return (
@@ -24,45 +23,12 @@ export default function WeaponChooser(): JSX.Element {
           {selectedLoadout.map((weapon, index) => {
             return (
               <div className="type" key={index}>
-                <h2 className="big-text legend-name m-5px">{weapon.name}</h2>
-                {showWeaponAmmoType &&
-                  weapon.ammoType !== "mythic" &&
-                  weapon.ammoType !== "none" && (
-                    <h3 className="description">
-                      {getAmmoType(weapon.ammoType)}
-                    </h3>
-                  )}
-                {weapon.ammoType !== "mythic" && weapon.ammoType !== "none" && (
-                  <button
-                    type="button"
-                    className="activator m-5px"
-                    onClick={() => invertValue(setShowWeaponAmmoType)}
-                  >
-                    {!showWeaponAmmoType ? "Show Ammo Type" : "Hide Ammo Type"}
-                  </button>
-                )}
-                {weapon.isCarePackageWeapon ? (
-                  <h3 className="description">
-                    Can <b className="big-text">ONLY</b> be found in a{" "}
-                    <b>Care Package</b>
-                  </h3>
-                ) : weapon.ammoType === "none" ? (
-                  <h3 className="description">No Weapon, sorry...</h3>
-                ) : (
-                  <h3 className="description">
-                    Can be found on the ground or in a replicator.
-                  </h3>
-                )}
-                {weapon.infoURL && (
-                  <a
-                    href={weapon.infoURL}
-                    className="description link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Info of <b>{weapon.name}</b>
-                  </a>
-                )}
+                <WeaponInfo
+                  name={weapon.name}
+                  ammoType={weapon.ammoType}
+                  isCarePackageWeapon={weapon.isCarePackageWeapon}
+                  infoURL={weapon.infoURL}
+                />
               </div>
             );
           })}
