@@ -1,6 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap");
 
+:root {
+  /* Variables */
+  --light-mode-bg-color: rgb(226, 60, 60);
+  --light-mode-border-color: rgb(255, 44, 44);
+  --dark-mode-bg-color: rgb(175, 46, 46);
+  --dark-mode-border-color: rgb(195, 46, 46);
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -13,11 +21,16 @@ body {
 }
 
 div.light-mode {
-  background-color: rgb(226, 60, 60);
+  background-color: var(--light-mode-bg-color);
+}
+
+div.april-fools-light-mode {
+  background-color: yellow;
+  color: black;
 }
 
 div.dark-mode {
-  background-color: rgb(226, 27, 27);
+  background-color: var(--dark-mode-bg-color);
 }
 
 h1 {
@@ -76,30 +89,30 @@ button {
 }
 
 .activator.light-mode {
-  border: 3px solid rgb(255, 44, 44);
+  border: 3px solid var(--light-mode-border-color);
   border-radius: 8px;
-  background-color: rgb(253, 60, 60);
+  background-color: var(--light-mode-bg-color);
   transition-duration: 1s;
   color: black;
 }
 
 .activator.light-mode:hover {
   cursor: pointer;
-  background-color: rgb(255, 44, 44);
+  background-color: var(--light-mode-border-color);
   color: white;
 }
 
 .activator.dark-mode {
-  border: 3px solid rgb(226, 11, 11);
+  border: 3px solid var(--dark-mode-border-color);
   border-radius: 8px;
-  background-color: rgb(226, 27, 27);
+  background-color: var(--dark-mode-bg-color);
   transition-duration: 1s;
   color: black;
 }
 
 .activator.dark-mode:hover {
   cursor: pointer;
-  background-color: rgb(226, 11, 11);
+  background-color: var(--dark-mode-border-color);
   color: white;
 }
 
@@ -107,14 +120,14 @@ button {
   font-family: "Roboto Mono", monospace;
 }
 
-@media (max-width: 510px) {
+@media (max-width: 520px) {
   .types {
     display: flex;
     flex-direction: column;
   }
 }
 
-@media (min-width: 511px) {
+@media (min-width: 521px) {
   .types {
     display: flex;
     flex-direction: row;
@@ -122,7 +135,7 @@ button {
 }
 
 .type {
-  flex: 0.5;
+  flex: 0.5 1;
 }
 
 .link {
@@ -135,35 +148,14 @@ button {
   text-decoration: underline;
 }
 
-.background {
-  position: absolute;
-  z-index: -1;
+.mode-selector.light-mode {
+  background-color: rgb(226, 34, 34);
 }
 
-button.selected-map::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(77, 77, 77, 0.4);
-  z-index: 1;
+.mode-selector.dark-mode {
+  background-color: rgb(174, 24, 24);
 }
 
-.button-text {
-  position: absolute;
-  z-index: 2;
-}
-
-img.selected-map-image::before {
-  filter: blur(2px);
-}
-
-.error-banner-container {
-  background-color: red;
-}
-
-.error-banner-text {
-  font-size: larger;
-  font-family: "Roboto Mono", monospace;
+.banner-container {
+  background-color: white;
 }
