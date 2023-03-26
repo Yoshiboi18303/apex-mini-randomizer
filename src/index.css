@@ -152,6 +152,10 @@ button {
   background-color: rgb(226, 34, 34);
 }
 
+.mode-selector.april-fools-light-mode {
+  background-color: rgb(255, 255, 75);
+}
+
 .mode-selector.dark-mode {
   background-color: rgb(174, 24, 24);
 }
