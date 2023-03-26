@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/apex-mini-randomizer/static/css/main.df6c4c48.css",
-    "main.js": "/apex-mini-randomizer/static/js/main.117650e5.js",
+    "main.css": "/apex-mini-randomizer/static/css/main.fbc51cfa.css",
+    "main.js": "/apex-mini-randomizer/static/js/main.74589b9e.js",
     "static/js/787.0937659f.chunk.js": "/apex-mini-randomizer/static/js/787.0937659f.chunk.js",
     "index.html": "/apex-mini-randomizer/index.html",
-    "main.df6c4c48.css.map": "/apex-mini-randomizer/static/css/main.df6c4c48.css.map",
-    "main.117650e5.js.map": "/apex-mini-randomizer/static/js/main.117650e5.js.map",
+    "main.fbc51cfa.css.map": "/apex-mini-randomizer/static/css/main.fbc51cfa.css.map",
+    "main.74589b9e.js.map": "/apex-mini-randomizer/static/js/main.74589b9e.js.map",
     "787.0937659f.chunk.js.map": "/apex-mini-randomizer/static/js/787.0937659f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.df6c4c48.css",
-    "static/js/main.117650e5.js"
+    "static/css/main.fbc51cfa.css",
+    "static/js/main.74589b9e.js"
   ]
 }
