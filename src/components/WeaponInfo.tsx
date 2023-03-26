@@ -5,6 +5,7 @@ interface WeaponInfoProps {
   name: string;
   ammoType: AmmoType;
   isCarePackageWeapon: boolean;
+  isDarkMode: boolean;
   infoURL?: string;
 }
 
@@ -12,6 +13,7 @@ export default function WeaponInfo({
   name,
   ammoType,
   isCarePackageWeapon,
+  isDarkMode,
   infoURL = undefined,
 }: WeaponInfoProps): JSX.Element {
   const [showWeaponAmmoType, setShowWeaponAmmoType] = useState(false);
@@ -25,7 +27,9 @@ export default function WeaponInfo({
       {ammoType !== "mythic" && ammoType !== "none" && (
         <button
           type="button"
-          className="activator m-5px"
+          className={`activator ${
+            isDarkMode ? "dark-mode" : "light-mode"
+          } m-5px`}
           onClick={() => invertValue(setShowWeaponAmmoType)}
         >
           {!showWeaponAmmoType ? "Show Ammo Type" : "Hide Ammo Type"}

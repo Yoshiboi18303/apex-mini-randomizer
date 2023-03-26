@@ -8,7 +8,13 @@ import {
   invertValue,
 } from "../utils/";
 
-export default function LandingPointChooser(): JSX.Element {
+interface LandingPointChooserProps {
+  isDarkMode: boolean;
+}
+
+export default function LandingPointChooser({
+  isDarkMode,
+}: LandingPointChooserProps): JSX.Element {
   const mapArray = getMapArray();
   const [selectedMap, setSelectedMap] = useState<ApexMap | null>(null);
   const [chosenPoint, setChosenPoint] = useState<Location | null>(null);
@@ -56,7 +62,7 @@ export default function LandingPointChooser(): JSX.Element {
       <br />
       <button
         type="button"
-        className="activator m-5px"
+        className={`activator ${isDarkMode ? "dark-mode" : "light-mode"} m-5px`}
         onClick={() =>
           setLandingPoint(selectedMap!, setChosenPoint, locationsOnMapOnly)
         }

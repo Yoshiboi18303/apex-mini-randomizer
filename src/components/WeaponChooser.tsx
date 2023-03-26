@@ -8,7 +8,13 @@ import {
 } from "../utils/";
 import WeaponInfo from "./WeaponInfo";
 
-export default function WeaponChooser(): JSX.Element {
+interface WeaponChooserProps {
+  isDarkMode: boolean;
+}
+
+export default function WeaponChooser({
+  isDarkMode,
+}: WeaponChooserProps): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
     Array(5).fill(true)
   );
@@ -27,6 +33,7 @@ export default function WeaponChooser(): JSX.Element {
                   name={weapon.name}
                   ammoType={weapon.ammoType}
                   isCarePackageWeapon={weapon.isCarePackageWeapon}
+                  isDarkMode={isDarkMode}
                   infoURL={weapon.infoURL}
                 />
               </div>
@@ -63,7 +70,7 @@ export default function WeaponChooser(): JSX.Element {
       <br />
       <button
         type="button"
-        className="activator m-5px"
+        className={`activator ${isDarkMode ? "dark-mode" : "light-mode"} m-5px`}
         onClick={() =>
           setRandomWeaponLoadout(
             allowedTypes,

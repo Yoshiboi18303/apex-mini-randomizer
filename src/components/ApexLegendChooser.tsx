@@ -6,7 +6,13 @@ import {
   invertArrayValue,
 } from "../utils/";
 
-export default function ApexLegendChooser(): JSX.Element {
+interface ApexLegendChooserProps {
+  isDarkMode: boolean;
+}
+
+export default function ApexLegendChooser({
+  isDarkMode,
+}: ApexLegendChooserProps): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
     Array(5).fill(true)
   );
@@ -51,7 +57,7 @@ export default function ApexLegendChooser(): JSX.Element {
       <br />
       <button
         type="button"
-        className="activator m-5px"
+        className={`activator ${isDarkMode ? "dark-mode" : "light-mode"} m-5px`}
         onClick={() => setRandomLegend(allowedTypes, setSelectedLegend)}
       >
         Select Legend

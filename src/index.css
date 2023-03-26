@@ -8,8 +8,16 @@
 }
 
 body {
-  background-color: rgb(253, 68, 68);
+  background-color: rgb(226, 34, 34);
   color: white;
+}
+
+div.light-mode {
+  background-color: rgb(226, 60, 60);
+}
+
+div.dark-mode {
+  background-color: rgb(226, 27, 27);
 }
 
 h1 {
@@ -67,17 +75,31 @@ button {
   font-family: "Oswald", sans-serif;
 }
 
-.activator {
+.activator.light-mode {
   border: 3px solid rgb(255, 44, 44);
   border-radius: 8px;
-  background-color: rgb(253, 68, 68);
+  background-color: rgb(253, 60, 60);
   transition-duration: 1s;
   color: black;
 }
 
-.activator:hover {
+.activator.light-mode:hover {
   cursor: pointer;
   background-color: rgb(255, 44, 44);
+  color: white;
+}
+
+.activator.dark-mode {
+  border: 3px solid rgb(226, 11, 11);
+  border-radius: 8px;
+  background-color: rgb(226, 27, 27);
+  transition-duration: 1s;
+  color: black;
+}
+
+.activator.dark-mode:hover {
+  cursor: pointer;
+  background-color: rgb(226, 11, 11);
   color: white;
 }
 
@@ -85,14 +107,14 @@ button {
   font-family: "Roboto Mono", monospace;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 510px) {
   .types {
     display: flex;
     flex-direction: column;
   }
 }
 
-@media (min-width: 501px) {
+@media (min-width: 511px) {
   .types {
     display: flex;
     flex-direction: row;
