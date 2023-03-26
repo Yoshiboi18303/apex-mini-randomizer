@@ -85,8 +85,18 @@ button {
   font-family: "Roboto Mono", monospace;
 }
 
-.types {
-  display: flex;
+@media (max-width: 500px) {
+  .types {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 501px) {
+  .types {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .type {
