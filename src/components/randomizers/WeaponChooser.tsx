@@ -5,16 +5,13 @@ import {
   invertArrayValue,
   invertValue,
   ammoTypes,
-} from "../utils/";
-import WeaponInfo from "./WeaponInfo";
-
-interface WeaponChooserProps {
-  isDarkMode: boolean;
-}
+  BaseComponentProps,
+} from "../../utils/";
+import WeaponInfo from "../WeaponInfo";
 
 export default function WeaponChooser({
   isDarkMode,
-}: WeaponChooserProps): JSX.Element {
+}: BaseComponentProps): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
     Array(5).fill(true)
   );

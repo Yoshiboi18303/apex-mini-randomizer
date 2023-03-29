@@ -1,19 +1,25 @@
-import { useState } from "react";
-import ApexLegendChooser from "./components/ApexLegendChooser";
-import WeaponChooser from "./components/WeaponChooser";
-import LandingPointChooser from "./components/LandingPointChooser";
+import { useState, useEffect } from "react";
+import ApexLegendChooser from "./components/randomizers/ApexLegendChooser";
+import WeaponChooser from "./components/randomizers/WeaponChooser";
+import LandingPointChooser from "./components/randomizers/LandingPointChooser";
 import Banner from "./components/Banner";
-import { invertValue } from "./utils/";
+import ConsequenceChooser from "./components/randomizers/consequences/ConsequenceChooser";
+import { invertValue, getLocalStorageData } from "./utils/";
 
-function isAprilFools(currentDate: Date): boolean {
+function isAprilFools(currentDate: Date = new Date()): boolean {
   // currentDate.getMonth() returns an index of the month, so 3 = 4 in this situation.
   return currentDate.getMonth() === 3 && currentDate.getDate() === 1;
 }
 
 function App() {
-  const [useDarkMode, setUseDarkMode] = useState(false);
-  const currentDate = new Date();
-  const isAprilFoolsDay = isAprilFools(currentDate);
+  const [useDarkMode, setUseDarkMode] = useState(
+    getLocalStorageData<boolean>("isDarkMode", false)
+  );
+  const isAprilFoolsDay = isAprilFools();
+
+  useEffect(() => {
+    localStorage.setItem("isDarkMode", JSON.stringify(useDarkMode));
+  }, [useDarkMode]);
 
   return (
     <div
@@ -25,8 +31,15 @@ function App() {
           : "light-mode"
       }
     >
-      {isAprilFoolsDay && !useDarkMode && (
-        <Banner message="🎉 Happy April Fools' Day, enjoy the yellow background! 🎉" />
+      {isAprilFoolsDay && (
+        <Banner
+          message={
+            !useDarkMode
+              ? "🎉 Happy April Fools' Day, enjoy the yellow background! 🎉"
+              : "🎉 Happy April Fools' Day! 🎉"
+          }
+          isDarkMode={useDarkMode}
+        />
       )}
       <div
         className={`mode-selector ${
@@ -60,6 +73,8 @@ function App() {
       <WeaponChooser isDarkMode={useDarkMode} />
       <hr className="m-30px" />
       <LandingPointChooser isDarkMode={useDarkMode} />
+      <hr className="m-30px" />
+      <ConsequenceChooser isDarkMode={useDarkMode} />
     </div>
   );
 }

@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { AmmoType, getAmmoType, invertValue } from "../utils/";
+import {
+  BaseComponentProps,
+  getAmmoType,
+  invertValue,
+  Weapon,
+} from "../utils/";
 
-interface WeaponInfoProps {
-  name: string;
-  ammoType: AmmoType;
-  isCarePackageWeapon: boolean;
-  isDarkMode: boolean;
-  infoURL?: string;
-}
+interface WeaponInfoProps extends BaseComponentProps, Weapon {}
 
 export default function WeaponInfo({
   name,

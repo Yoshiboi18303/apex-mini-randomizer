@@ -7,11 +7,11 @@ type Images = {
     }
 }
 export type AmmoType = "light" | "heavy" | "energy" | "sniper" | "shotgun" | "mythic" | "none";
-type LootTier = "basic" | "mid" | "high" | "none" | "unknown";
-type MathOperator = "less" | "lessOrEqual" | "equal" | "greater" | "greaterOrEqual";
-type ConsequenceSeverity = "low" | "medium" | "high";
 export type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
 export type ReadOnlyArray<T = unknown> = readonly T[];
+export type ConsequenceSeverity = "low" | "medium" | "high";
+type LootTier = "basic" | "mid" | "high" | "none" | "unknown";
+type MathOperator = "less" | "lessOrEqual" | "equal" | "greater" | "greaterOrEqual";
 
 const legendTypes: ReadOnlyArray<string> = ["Assault", "Skirmisher", "Recon", "Support", "Controller"];
 export const ammoTypes: ReadOnlyArray<string> = ["Light", "Heavy", "Energy", "Sniper", "Shotgun"];
@@ -43,7 +43,17 @@ export interface ApexMap {
 
 export interface Consequence {
     name: string;
+    description: string;
     severity: ConsequenceSeverity;
+}
+
+export interface Preset {
+    name: string;
+    consequences: Consequence[];
+}
+
+export interface BaseComponentProps {
+    isDarkMode: boolean;
 }
 
 function getWikiURL(name: string): string {
@@ -85,9 +95,17 @@ function addMap(name: string, imageURL: string, locations: Location[]): ApexMap 
     }
 }
 
-export function makeConsequence(name: string, severity: ConsequenceSeverity = "low"): Consequence {
+function addPreset(name: string, consequences: Consequence[]): Preset {
     return {
         name,
+        consequences,
+    }
+}
+
+export function makeConsequence(name: string, description: string, severity: ConsequenceSeverity = "low"): Consequence {
+    return {
+        name,
+        description,
         severity,
     }
 }
@@ -384,6 +402,39 @@ const allMaps = new Map<number, ApexMap>([
     ])],
 ])
 
+const presets = new Map<number, Preset>([
+    [0, addPreset("Weapon Based", [
+        makeConsequence("Only One Weapon", "You can only use one weapon (no swapping) and your fists for the entire match.", "high"),
+        makeConsequence("No SMGs", "You cannot use any SMGs for the entire match.", "low"),
+        makeConsequence("No ARs", "You cannot use any Assault Rifles for the entire match.", "low"),
+        makeConsequence("Snipers Only", "You can only use any weapons that consume Sniper Ammo (which includes the Wingman).", "medium"),
+        makeConsequence("Minigun Only", "You can only use Sheila for the entire match, nothing else (except your tactical).", "high"),
+        makeConsequence("Melee Madness", "Melees only, that's literally it.", "high"),
+        makeConsequence("Octane's Favorite", "You can only use grenades.", "medium"),
+        makeConsequence("One In The Chamber", "You only get to fire one bullet/burst on every weapon you pick up, then you have to drop it and never pick it back up.", "high"),
+        makeConsequence("No Hate", "You can only use your most disliked weapons", "medium")
+    ])],
+    [1, addPreset("Legend Based", [
+        makeConsequence("Gotta Go Fast", "As Octane, you can't stop using your stim.", "low"),
+        makeConsequence("No Tactical Ability", "Someone hacked your tactical ability and now it doesn't work.", "high"),
+        makeConsequence("No Ultimate Ability", "Someone hacked your ultimate ability and now it doesn't work.", "high"),
+        makeConsequence("Drone Safety", "As Crypto, you have to stay within 10 meters of your drone, if it gets destroyed, you must wait for it to come back before continuing.", "medium"),
+        makeConsequence("Broken Jump Jets", "As Horizon, you cannot make a hard landing (except from landing from the drop ship), if you do make a hard landing, drop a weapon.", "high"),
+        makeConsequence("Hacked Revive Shield", "As Newcastle, you have to drop your knockdown shield before reviving your teammate(s).", "medium"),
+        makeConsequence("Copycat", "As Mirage, you have to copy at least 5 seconds of your sent decoys' actions before it despawns, if you don't, drop all your weapons (does not include your ultimate) (no taking control of the decoy for those 5 seconds).", "low")
+    ])],
+    [2, addPreset("Movement Based", [
+        makeConsequence("The Floor Is Lava", "You cannot touch any floor at all, if you do, thermite yourself, if you don't have a thermite, drop a weapon.", "high"),
+        makeConsequence("Overweight", "You cannot sprint at all for the entire match, if you do, drop a weapon.", "medium"),
+        makeConsequence("Parkour Pro", "As Pathfinder, you must always be grappling or off the floor, if you touch the floor, drop a weapon.", "high")
+    ])],
+    [3, addPreset("Controller Based", [
+        makeConsequence("Opposite Day", "Invert your camera and movement controls (set your stick layout to Southpaw), for extra challenge (optional), turn the \"Inverted Look\" option on.", "high"),
+        makeConsequence("One Hand Only", "You can only use one hand the entire match (you can hold your controller with your second hand if you need to).", "medium"),
+        makeConsequence("No ADS", "You cannot ADS (Aim Down Sights) for one match.", "low"),
+    ])]
+])
+
 function getErrorMessage(allowedTypes: unknown[], requiredLength: number) {
     return `Invalid number of allowed types\n\nRequired: ${requiredLength}\nFound: ${allowedTypes.length}`;
 }
@@ -529,6 +580,12 @@ export function getMapArray(set: Setter<ApexMap[]> | null = null): ReadOnlyArray
     return mapArray;
 }
 
+export function getPresetArray(set: Setter<Preset[]> | null = null): ReadOnlyArray<Preset> {
+    const presetArray = Array.from(presets.values());
+    if (set) set(presetArray);
+    return presetArray;
+}
+
 export function setLandingPoint(selectedMap: ApexMap | number, set: Setter<Location | null>, locationsOnMapOnly: boolean = false): void {
     const map = typeof selectedMap === "number" ? allMaps.get(selectedMap) : selectedMap;
 
@@ -547,4 +604,28 @@ export function getImagesKeys(from: keyof Images = "maps", set: Setter<string[] 
         if (set) set(null);
         return null;
     }
+}
+
+export function setRandomConsequence(consequences: Consequence[], set: Setter<Consequence | null>, consequenceFilter: ConsequenceSeverity | null = null): void {
+    if (consequenceFilter) consequences = consequences.filter((consequence) => consequence.severity === consequenceFilter);
+    if (consequences.length <= 0) {
+        set(null);
+        return;
+    } else set(getRandomItemFromArray(consequences));
+}
+
+export function getConsequenceDifficulty(severity: ConsequenceSeverity): string {
+    switch (severity) {
+        case "low":
+            return "Easy";
+        case "medium":
+            return "Medium";
+        case "high":
+            return "Hard"
+    }
+}
+
+export function getLocalStorageData<T>(key: string, defaultValue: T): T {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : defaultValue;
 }

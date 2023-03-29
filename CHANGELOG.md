@@ -98,10 +98,12 @@ This is a pretty big update to the web app, so there's a lot to document here, l
 
 ---
 
-> ## Plans for next version
+> ## Plans for later version(s)
 >
 > Switch from **React** to [**Preact**](https://preactjs.com/) _(maybe)_.
 >
-> Add consequence chooser with custom input rather than preset items in the "back end".
+> Add translations to allow other people from different countries to use the app _(maybe)_
 >
 > Make separate project packaged with [**Tauri**](https://tauri.app/) _(AKA make a separate version that is a desktop application)_ `(would love to do this)`
+>
+> Make separate project packaged with [**Ionic**](https://ionicframework.com/)

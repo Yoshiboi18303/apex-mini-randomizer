@@ -6,15 +6,12 @@ import {
   getMapArray,
   getLootTier,
   invertValue,
-} from "../utils/";
-
-interface LandingPointChooserProps {
-  isDarkMode: boolean;
-}
+  BaseComponentProps,
+} from "../../utils/";
 
 export default function LandingPointChooser({
   isDarkMode,
-}: LandingPointChooserProps): JSX.Element {
+}: BaseComponentProps): JSX.Element {
   const mapArray = getMapArray();
   const [selectedMap, setSelectedMap] = useState<ApexMap | null>(null);
   const [chosenPoint, setChosenPoint] = useState<Location | null>(null);

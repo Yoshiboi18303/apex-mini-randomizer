@@ -4,15 +4,12 @@ import {
   getLegendType,
   Legend,
   invertArrayValue,
-} from "../utils/";
-
-interface ApexLegendChooserProps {
-  isDarkMode: boolean;
-}
+  BaseComponentProps,
+} from "../../utils";
 
 export default function ApexLegendChooser({
   isDarkMode,
-}: ApexLegendChooserProps): JSX.Element {
+}: BaseComponentProps): JSX.Element {
   const [allowedTypes, setAllowedTypes] = useState<boolean[]>(
     Array(5).fill(true)
   );
