@@ -25,12 +25,6 @@
     "predeploy": "git push -u origin main && cls && npm run build",
     "deploy": "gh-pages -b gh-pages -d build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

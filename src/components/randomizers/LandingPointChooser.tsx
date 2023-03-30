@@ -8,6 +8,7 @@ import {
   invertValue,
   BaseComponentProps,
 } from "../../utils/";
+import Header from "../Header";
 
 export default function LandingPointChooser({
   isDarkMode,
@@ -19,6 +20,11 @@ export default function LandingPointChooser({
 
   return (
     <div>
+      <Header
+        title="Landing Point Chooser"
+        description="Here you can have a random landing point to start in!"
+        className="mb-30px"
+      />
       {chosenPoint && (
         <div>
           <h2 className="big-text legend-name m-5px">{chosenPoint.name}</h2>

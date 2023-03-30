@@ -8,6 +8,7 @@ import {
   BaseComponentProps,
   getLocalStorageData,
 } from "../../../utils";
+import Header from "../../Header";
 import ConsequenceCreator from "./ConsequenceCreator";
 
 export default function ConsequenceChooser({
@@ -35,14 +36,28 @@ export default function ConsequenceChooser({
   }
 
   function removeItem(index: number): void {
-    const newItems = [...items];
-    setItems(newItems.filter((_, itemIndex) => itemIndex !== index));
+    const itemToRemove = items[index];
+    const shouldRemove = confirm(
+      `Are you sure you want to remove "${itemToRemove.name}"? This cannot be undone!`
+    );
+    if (shouldRemove) {
+      const newItems = [...items];
+      setItems(newItems.filter((_, itemIndex) => itemIndex !== index));
+    }
+  }
+
+  function removeAll(): void {
+    const shouldRemove = confirm("Are you sure? You will lose all changes!");
+    if (shouldRemove) setItems([]);
   }
 
   function resetComp(): void {
-    setItems([]);
-    setOldItems([]);
-    setSelectedConsequence(null);
+    const shouldRemove = confirm("Are you sure? You will lose all changes!");
+    if (shouldRemove) {
+      setItems([]);
+      setOldItems([]);
+      setSelectedConsequence(null);
+    }
   }
 
   function handleFilter(event: ChangeEvent<HTMLSelectElement>): void {
@@ -63,6 +78,11 @@ export default function ConsequenceChooser({
 
   return (
     <div>
+      <Header
+        title="Challenge Chooser"
+        description="Here you can manage and create challenges and have a random one selected!"
+        className="mb-30px"
+      />
       <a
         href="https://docs.google.com/document/d/1ztKALxr8LZ4tpxMpR0oBAiVkk0XNODlifXIzESp99Qk/edit?usp=sharing"
         className="description link m-5px"
@@ -124,7 +144,7 @@ export default function ConsequenceChooser({
               className={`type activator ${
                 isDarkMode ? "dark-mode" : "light-mode"
               }`}
-              onClick={() => setItems([])}
+              onClick={() => removeAll()}
             >
               Delete All
             </button>

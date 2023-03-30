@@ -5,6 +5,7 @@ import LandingPointChooser from "./components/randomizers/LandingPointChooser";
 import Banner from "./components/Banner";
 import ConsequenceChooser from "./components/randomizers/consequences/ConsequenceChooser";
 import { invertValue, getLocalStorageData } from "./utils/";
+import Footer from "./components/Footer";
 
 function isAprilFools(currentDate: Date = new Date()): boolean {
   // currentDate.getMonth() returns an index of the month, so 3 = 4 in this situation.
@@ -15,7 +16,8 @@ function App() {
   const [useDarkMode, setUseDarkMode] = useState(
     getLocalStorageData<boolean>("isDarkMode", false)
   );
-  const isAprilFoolsDay = isAprilFools();
+  const currentDate = new Date();
+  const isAprilFoolsDay = isAprilFools(currentDate);
 
   useEffect(() => {
     localStorage.setItem("isDarkMode", JSON.stringify(useDarkMode));
@@ -68,6 +70,7 @@ function App() {
         Here you can enjoy letting our "<em>very powerful algorithm</em>" decide
         a lot of stuff from the game Apex Legends!
       </h2>
+      <hr className="m-30px" />
       <ApexLegendChooser isDarkMode={useDarkMode} />
       <hr className="m-30px" />
       <WeaponChooser isDarkMode={useDarkMode} />
@@ -75,6 +78,27 @@ function App() {
       <LandingPointChooser isDarkMode={useDarkMode} />
       <hr className="m-30px" />
       <ConsequenceChooser isDarkMode={useDarkMode} />
+      <hr className="m-30px" />
+      <Footer isDarkMode={useDarkMode}>
+        <div>
+          <h4 className="footer-text">
+            © {currentDate.getFullYear()} Yoshiboi18303 |{" "}
+            <a
+              href="https://github.com/Yoshiboi18303/apex-mini-randomizer/blob/main/LICENSE"
+              className="footer-text link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              MIT License
+            </a>
+          </h4>
+          <h6 className="footer-text">
+            This project is in no way affiliated with EA/Respawn, Apex Legends
+            is property of Electronic Arts/Respawn Entertainment. This was made
+            by <b>a player, for players.</b>
+          </h6>
+        </div>
+      </Footer>
     </div>
   );
 }

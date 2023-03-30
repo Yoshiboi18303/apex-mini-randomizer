@@ -6,6 +6,7 @@ import {
   invertArrayValue,
   BaseComponentProps,
 } from "../../utils";
+import Header from "../Header";
 
 export default function ApexLegendChooser({
   isDarkMode,
@@ -17,6 +18,11 @@ export default function ApexLegendChooser({
 
   return (
     <div>
+      <Header
+        title="Character Chooser"
+        description="Here you can have a random character selected to play as!"
+        className="mb-30px"
+      />
       {selectedLegend && (
         <>
           <div>

@@ -7,6 +7,7 @@ import {
   ammoTypes,
   BaseComponentProps,
 } from "../../utils/";
+import Header from "../Header";
 import WeaponInfo from "../WeaponInfo";
 
 export default function WeaponChooser({
@@ -21,6 +22,11 @@ export default function WeaponChooser({
 
   return (
     <div>
+      <Header
+        title="Loadout Chooser"
+        description="Here you can have a random weapon loadout to play with!"
+        className="mb-30px"
+      />
       {selectedLoadout && (
         <div className="types">
           {selectedLoadout.map((weapon, index) => {
