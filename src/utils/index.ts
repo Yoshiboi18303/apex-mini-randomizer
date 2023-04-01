@@ -95,7 +95,7 @@ function addMap(name: string, imageURL: string, locations: Location[]): ApexMap 
     }
 }
 
-function addPreset(name: string, consequences: Consequence[]): Preset {
+export function addPreset(name: string, consequences: Consequence[]): Preset {
     return {
         name,
         consequences,
@@ -580,7 +580,13 @@ export function getMapArray(set: Setter<ApexMap[]> | null = null): ReadOnlyArray
     return mapArray;
 }
 
-export function getPresetArray(set: Setter<Preset[]> | null = null): ReadOnlyArray<Preset> {
+export function getPresetArray(set: Setter<Preset[]> | null = null): Preset[] {
+    const presetArray = Array.from(presets.values());
+    if (set) set(presetArray);
+    return presetArray;
+}
+
+export function getReadOnlyPresetArray(set: Setter<Preset[]> | null = null): ReadOnlyArray<Preset> {
     const presetArray = Array.from(presets.values());
     if (set) set(presetArray);
     return presetArray;

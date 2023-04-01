@@ -7,6 +7,8 @@ import {
   getConsequenceDifficulty,
   BaseComponentProps,
   getLocalStorageData,
+  Preset,
+  addPreset,
 } from "../../../utils";
 import Header from "../../Header";
 import ConsequenceCreator from "./ConsequenceCreator";
@@ -14,10 +16,12 @@ import ConsequenceCreator from "./ConsequenceCreator";
 export default function ConsequenceChooser({
   isDarkMode,
 }: BaseComponentProps): JSX.Element {
-  const presets = getPresetArray();
   const severities: ConsequenceSeverity[] = ["low", "medium", "high"];
   const [items, setItems] = useState<Consequence[]>(
     getLocalStorageData<Consequence[]>("userPreset", [])
+  );
+  const [userPresets, setUserPresets] = useState<Preset[]>(
+    getLocalStorageData<Preset[]>("userPresets", getPresetArray())
   );
   const [oldItems, setOldItems] = useState<Consequence[]>([]);
   const [selectedConsequence, setSelectedConsequence] =
@@ -27,12 +31,16 @@ export default function ConsequenceChooser({
     localStorage.setItem("userPreset", JSON.stringify(items));
   }, [items]);
 
+  useEffect(() => {
+    localStorage.setItem("userPresets", JSON.stringify(userPresets));
+  }, [userPresets]);
+
   function handlePresetChange(event: ChangeEvent<HTMLSelectElement>): void {
     const selected = event.target.selectedIndex;
 
     // 0 would be the "None" option here, so set the items to an empty array.
     if (selected === 0) setItems([]);
-    else setItems(presets[selected - 1]?.consequences || []);
+    else setItems(userPresets[selected - 1]?.consequences || []);
   }
 
   function removeItem(index: number): void {
@@ -76,6 +84,15 @@ export default function ConsequenceChooser({
     }
   }
 
+  function savePreset(): void {
+    let presetName = prompt("What name should your preset be saved as?");
+
+    if (presetName && presetName.length > 0) {
+      setUserPresets([...userPresets, addPreset(presetName, items)]);
+      alert(`Preset saved with name: "${presetName}"`);
+    } else alert("Preset name invalid, preset not saved.");
+  }
+
   return (
     <div>
       <Header
@@ -116,14 +133,14 @@ export default function ConsequenceChooser({
               return (
                 <div className="type m-5px" key={index}>
                   <h2 className="legend-name">{con.name}</h2>
-                  ------
+                  <b>------</b>
                   <h3 className="description">
                     <b className={difficulty.toLowerCase()}>
                       {getConsequenceDifficulty(con.severity)}
                     </b>{" "}
                     Difficulty
                   </h3>
-                  ------
+                  <b>------</b>
                   <br />
                   <button
                     type="button"
@@ -139,6 +156,15 @@ export default function ConsequenceChooser({
             })}
           </div>
           <div className="types">
+            <button
+              type="button"
+              className={`type activator ${
+                isDarkMode ? "dark-mode" : "light-mode"
+              }`}
+              onClick={() => savePreset()}
+            >
+              Save As Preset
+            </button>
             <button
               type="button"
               className={`type activator ${
@@ -172,7 +198,7 @@ export default function ConsequenceChooser({
           <br />
           <select title="Preset" onChange={handlePresetChange}>
             <option value="">None</option>
-            {presets.map((preset, index) => {
+            {userPresets.map((preset, index) => {
               return (
                 <option value={preset.name} key={index}>
                   {preset.name}

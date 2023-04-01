@@ -92,11 +92,23 @@ function App() {
               MIT License
             </a>
           </h4>
-          <h6 className="footer-text">
-            This project is in no way affiliated with EA/Respawn, Apex Legends
-            is property of Electronic Arts/Respawn Entertainment. This was made
-            by <b>a player, for players.</b>
+          <h6 className="footer-text mb-30">
+            This project is in no way sponsored, affiliated or endorsed with
+            EA/Respawn, Apex Legends is property of Electronic Arts/Respawn
+            Entertainment. This was made by <b>a player, for players.</b>
           </h6>
+          <br />
+          <h4 className="footer-text">
+            Made with 💖 by{" "}
+            <a
+              href="https://github.com/Yoshiboi18303"
+              className="footer-text link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <b>Yoshiboi18303</b>
+            </a>
+          </h4>
         </div>
       </Footer>
     </div>

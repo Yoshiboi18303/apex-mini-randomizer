@@ -15,8 +15,8 @@ export default function LandingPointChooser({
 }: BaseComponentProps): JSX.Element {
   const mapArray = getMapArray();
   const [selectedMap, setSelectedMap] = useState<ApexMap | null>(null);
+  const [locationsOnMapOnly, setLocationsOnMapOnly] = useState(false);
   const [chosenPoint, setChosenPoint] = useState<Location | null>(null);
-  const [locationsOnMapOnly, setLocationsOnMapOnly] = useState<boolean>(false);
 
   return (
     <div>
