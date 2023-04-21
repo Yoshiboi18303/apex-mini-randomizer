@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import {
   Consequence,
   ConsequenceSeverity,
@@ -7,12 +7,13 @@ import {
   Setter,
 } from "../../../utils/";
 import TextInput from "../../TextInput";
+import TextAreaInput from "../../TextAreaInput";
+import SelectInput from "../../SelectInput";
 
 interface ConsequenceCreatorProps extends BaseComponentProps {
   consequences: Consequence[];
   setConsequences: Setter<Consequence[]>;
   setOldConsequences: Setter<Consequence[]>;
-  isDarkMode: boolean;
   severities: ConsequenceSeverity[];
 }
 
@@ -23,9 +24,19 @@ export default function ConsequenceCreator({
   setOldConsequences,
   severities,
 }: ConsequenceCreatorProps) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(localStorage.getItem("name") || "");
   const [severity, setSeverity] = useState<ConsequenceSeverity>("low");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    localStorage.getItem("description") || ""
+  );
+
+  useEffect(() => {
+    localStorage.setItem("name", name);
+  }, [name]);
+
+  useEffect(() => {
+    localStorage.setItem("description", description);
+  }, [description]);
 
   function handleCreation(): void {
     if (name.length === 0 || description.length === 0) return;
@@ -62,7 +73,7 @@ export default function ConsequenceCreator({
         <label htmlFor="severity" className="legend-type">
           Difficulty: <span className="required">* </span>
         </label>
-        <select
+        <SelectInput
           title="Consequence Difficulty"
           onChange={handleSeverityChange}
           required
@@ -70,13 +81,13 @@ export default function ConsequenceCreator({
           <option value="low">Easy</option>
           <option value="medium">Medium</option>
           <option value="high">Hard</option>
-        </select>
+        </SelectInput>
       </div>
       <div>
         <label htmlFor="description" className="legend-type">
           Description: <span className="required">* </span>
         </label>
-        <TextInput
+        <TextAreaInput
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           placeholder="Consequence Description"

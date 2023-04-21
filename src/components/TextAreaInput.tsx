@@ -1,18 +1,17 @@
 import type { InputProps } from "../utils";
 
-export default function TextInput({
+export default function TextAreaInput({
   value,
   onChange,
   placeholder,
   required = false,
-}: InputProps) {
+}: InputProps<HTMLTextAreaElement>) {
   return (
-    <input
-      type="text"
+    <textarea
       onChange={onChange}
       placeholder={placeholder}
       required={required}
       value={value}
-    ></input>
+    ></textarea>
   );
 }

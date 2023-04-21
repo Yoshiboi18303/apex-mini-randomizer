@@ -89,6 +89,10 @@ button {
   font-family: "Oswald", sans-serif;
 }
 
+.activator {
+  opacity: 1;
+}
+
 @media (max-width: 520px) {
   .activator.light-mode {
     border: 3px solid var(--light-mode-border-color);
@@ -141,14 +145,19 @@ button {
   font-family: "Roboto Mono", monospace;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 547px) {
   .types {
     display: flex;
     flex-direction: column;
   }
+
+  .type {
+    padding: 5px;
+    margin: 5px;
+  }
 }
 
-@media (min-width: 521px) {
+@media (min-width: 548px) {
   .types {
     display: flex;
     flex-direction: row;
@@ -191,19 +200,6 @@ button {
 
 .wrap {
   flex-wrap: wrap;
-}
-
-.form-container.light-mode {
-  background-color: white;
-  border: 2px solid white;
-  border-radius: 8px;
-  color: black;
-}
-
-.form-container.dark-mode {
-  background-color: black;
-  border: 2px solid black;
-  border-radius: 8px;
 }
 
 .easy {
@@ -269,4 +265,24 @@ h6.footer-text {
 
 b {
   font-weight: bold;
+}
+
+.disabled {
+  background-color: red;
+  border-radius: 8px;
+  color: white;
+  transition-duration: 1s;
+  opacity: 0.4;
+}
+
+.disabled.light-mode {
+  border: 3px solid red;
+}
+
+.disabled.dark-mode {
+  border: 3px solid var(--dark-mode-border-color);
+}
+
+.disabled:hover {
+  cursor: not-allowed;
 }

@@ -51,7 +51,7 @@ export default function ApexLegendChooser({
                 className={type ? "active" : "inactive"}
                 onClick={() => invertArrayValue(index, setAllowedTypes)}
               >
-                {type ? "Active" : "Inactive"}
+                {type ? "Allowed" : "Not Allowed"}
               </button>
             </div>
           );

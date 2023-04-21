@@ -12,21 +12,24 @@ import {
 } from "../../../utils";
 import Header from "../../Header";
 import ConsequenceCreator from "./ConsequenceCreator";
+import SelectInput from "../../SelectInput";
 
 export default function ConsequenceChooser({
   isDarkMode,
 }: BaseComponentProps): JSX.Element {
+  // Variables and States
   const severities: ConsequenceSeverity[] = ["low", "medium", "high"];
   const [items, setItems] = useState<Consequence[]>(
     getLocalStorageData<Consequence[]>("userPreset", [])
   );
+  const [oldItems, setOldItems] = useState<Consequence[]>([]);
   const [userPresets, setUserPresets] = useState<Preset[]>(
     getLocalStorageData<Preset[]>("userPresets", getPresetArray())
   );
-  const [oldItems, setOldItems] = useState<Consequence[]>([]);
   const [selectedConsequence, setSelectedConsequence] =
     useState<Consequence | null>(null);
 
+  // Effects
   useEffect(() => {
     localStorage.setItem("userPreset", JSON.stringify(items));
   }, [items]);
@@ -35,12 +38,16 @@ export default function ConsequenceChooser({
     localStorage.setItem("userPresets", JSON.stringify(userPresets));
   }, [userPresets]);
 
+  // Functions
   function handlePresetChange(event: ChangeEvent<HTMLSelectElement>): void {
     const selected = event.target.selectedIndex;
 
     // 0 would be the "None" option here, so set the items to an empty array.
     if (selected === 0) setItems([]);
-    else setItems(userPresets[selected - 1]?.consequences || []);
+    else {
+      const selectedItems = userPresets[selected - 1]?.consequences || [];
+      setItems(selectedItems);
+    }
   }
 
   function removeItem(index: number): void {
@@ -61,10 +68,19 @@ export default function ConsequenceChooser({
 
   function resetComp(): void {
     const shouldRemove = confirm("Are you sure? You will lose all changes!");
+    const presetArray = getPresetArray();
     if (shouldRemove) {
       setItems([]);
       setOldItems([]);
       setSelectedConsequence(null);
+      if (userPresets.length !== presetArray.length) {
+        const shouldResetPresets = confirm(
+          "Would you like to also have the presets reset?"
+        );
+        if (shouldResetPresets) {
+          setUserPresets(presetArray);
+        }
+      }
     }
   }
 
@@ -93,6 +109,24 @@ export default function ConsequenceChooser({
     } else alert("Preset name invalid, preset not saved.");
   }
 
+  function deletePreset(index: number): void {
+    const presetName = userPresets[index].name;
+    const shouldDelete = confirm(
+      `Are you sure you want to delete the "${presetName}" preset? This is permanent and cannot be undone!`
+    );
+
+    if (shouldDelete) {
+      setUserPresets(
+        userPresets.filter((_, presetIndex) => presetIndex !== index)
+      );
+      alert(`Preset "${presetName}" deleted.`);
+    }
+  }
+
+  // Predicates
+  const findMatchingPreset = (preset: Preset) => preset.consequences === items;
+
+  // HTML
   return (
     <div>
       <Header
@@ -102,26 +136,34 @@ export default function ConsequenceChooser({
       />
       <a
         href="https://docs.google.com/document/d/1ztKALxr8LZ4tpxMpR0oBAiVkk0XNODlifXIzESp99Qk/edit?usp=sharing"
-        className="description link m-5px"
+        className="description link mb-30px"
         target="_blank"
         rel="noreferrer noopener"
       >
         All Rules for preset challenges
       </a>
-      {selectedConsequence && (
-        <div className={`chosen ${isDarkMode ? "dark-mode" : "light-mode"}`}>
-          <h2 className="legend-name">{selectedConsequence.name}</h2>
-          <h3 className="description">
-            <b
-              className={getConsequenceDifficulty(
-                selectedConsequence.severity
-              ).toLowerCase()}
+      {items.length > 0 && (
+        <div>
+          <h2
+            className={`big-text legend-type${
+              !userPresets.find(findMatchingPreset) ? " mb-30px" : ""
+            }`}
+          >
+            "{userPresets.find(findMatchingPreset)?.name || "Custom"}" Preset
+          </h2>
+          {userPresets.find(findMatchingPreset) && (
+            <button
+              type="button"
+              className={`activator ${
+                isDarkMode ? "dark-mode" : "light-mode"
+              } mb-30px`}
+              onClick={() =>
+                deletePreset(userPresets.findIndex(findMatchingPreset))
+              }
             >
-              {getConsequenceDifficulty(selectedConsequence.severity)}
-            </b>{" "}
-            Difficulty
-          </h3>
-          <h3 className="description">{selectedConsequence.description}</h3>
+              Delete
+            </button>
+          )}
         </div>
       )}
       {items.length > 0 && (
@@ -186,17 +228,13 @@ export default function ConsequenceChooser({
           </div>
         </div>
       )}
-      <div
-        className={`types form-container ${
-          isDarkMode ? "dark-mode" : "light-mode"
-        } mb-30px`}
-      >
+      <div className="types wrap mb-30px">
         <div className="type">
           <label htmlFor="preset" className="legend-type">
             Use a preset?
           </label>
           <br />
-          <select title="Preset" onChange={handlePresetChange}>
+          <SelectInput title="Preset" onChange={handlePresetChange}>
             <option value="">None</option>
             {userPresets.map((preset, index) => {
               return (
@@ -205,20 +243,13 @@ export default function ConsequenceChooser({
                 </option>
               );
             })}
-          </select>
+          </SelectInput>
         </div>
-        <ConsequenceCreator
-          consequences={items}
-          setConsequences={setItems}
-          setOldConsequences={setOldItems}
-          severities={severities}
-          isDarkMode={isDarkMode}
-        />
         <div>
-          <label htmlFor="filter" className="legend-type">
+          <label htmlFor="filter" className="legend-type m-5px">
             Consequence Filter:{" "}
           </label>
-          <select title="Consequence Filter" onChange={handleFilter}>
+          <SelectInput title="Consequence Filter" onChange={handleFilter}>
             <option value="">None</option>
             {severities.map((severity, index) => {
               return (
@@ -227,18 +258,46 @@ export default function ConsequenceChooser({
                 </option>
               );
             })}
-          </select>
+          </SelectInput>
         </div>
+        <ConsequenceCreator
+          consequences={items}
+          setConsequences={setItems}
+          setOldConsequences={setOldItems}
+          severities={severities}
+          isDarkMode={isDarkMode}
+        />
       </div>
-      {items.length > 0 && (
-        <button
-          type="button"
-          className={`activator ${isDarkMode ? "dark-mode" : "light-mode"}`}
-          onClick={() => setRandomConsequence(items, setSelectedConsequence)}
+      {selectedConsequence && (
+        <div
+          className={`chosen ${
+            isDarkMode ? "dark-mode" : "light-mode"
+          } mb-30px`}
         >
-          Get Challenge
-        </button>
+          <h2 className="legend-name">{selectedConsequence.name}</h2>
+          <h3 className="description">
+            <b
+              className={getConsequenceDifficulty(
+                selectedConsequence.severity
+              ).toLowerCase()}
+            >
+              {getConsequenceDifficulty(selectedConsequence.severity)}
+            </b>{" "}
+            Difficulty
+          </h3>
+          <h3 className="description">{selectedConsequence.description}</h3>
+        </div>
       )}
+      <button
+        type="button"
+        className={`${items.length > 0 ? "activator" : "disabled"} ${
+          isDarkMode ? "dark-mode" : "light-mode"
+        }`}
+        onClick={() => setRandomConsequence(items, setSelectedConsequence)}
+        disabled={items.length <= 0}
+      >
+        Get Challenge
+      </button>
     </div>
   );
 }

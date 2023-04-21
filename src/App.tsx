@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ApexLegendChooser from "./components/randomizers/ApexLegendChooser";
-import WeaponChooser from "./components/randomizers/WeaponChooser";
-import LandingPointChooser from "./components/randomizers/LandingPointChooser";
+import WeaponChooser from "./components/randomizers/weapons/WeaponChooser";
+import LandingPointChooser from "./components/randomizers/landing/LandingPointChooser";
 import Banner from "./components/Banner";
 import ConsequenceChooser from "./components/randomizers/consequences/ConsequenceChooser";
 import { invertValue, getLocalStorageData } from "./utils/";
@@ -99,7 +99,7 @@ function App() {
           </h6>
           <br />
           <h4 className="footer-text">
-            Made with 💖 by{" "}
+            Made with ❤️ by{" "}
             <a
               href="https://github.com/Yoshiboi18303"
               className="footer-text link"

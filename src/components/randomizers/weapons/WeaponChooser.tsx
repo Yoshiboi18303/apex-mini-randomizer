@@ -6,9 +6,9 @@ import {
   invertValue,
   ammoTypes,
   BaseComponentProps,
-} from "../../utils/";
-import Header from "../Header";
-import WeaponInfo from "../WeaponInfo";
+} from "../../../utils";
+import Header from "../../Header";
+import WeaponInfo from "./WeaponInfo";
 
 export default function WeaponChooser({
   isDarkMode,
@@ -24,7 +24,7 @@ export default function WeaponChooser({
     <div>
       <Header
         title="Loadout Chooser"
-        description="Here you can have a random weapon loadout to play with!"
+        description="Here you can get a random weapon loadout to play with!"
         className="mb-30px"
       />
       {selectedLoadout && (
@@ -54,7 +54,7 @@ export default function WeaponChooser({
                 className={type ? "active" : "inactive"}
                 onClick={() => invertArrayValue(index, setAllowedTypes)}
               >
-                {type ? "Active" : "Inactive"}
+                {type ? "Allowed" : "Not Allowed"}
               </button>
             </div>
           );
@@ -68,7 +68,7 @@ export default function WeaponChooser({
         }
         onClick={() => invertValue(setCarePackageWeaponsAllowed)}
       >
-        {carePackageWeaponsAllowed ? "Active" : "Inactive"}
+        {carePackageWeaponsAllowed ? "Allowed" : "Not Allowed"}
       </button>
       <br />
       <button

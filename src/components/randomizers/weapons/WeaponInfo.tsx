@@ -4,7 +4,7 @@ import {
   getAmmoType,
   invertValue,
   Weapon,
-} from "../utils/";
+} from "../../../utils";
 
 interface WeaponInfoProps extends BaseComponentProps, Weapon {}
 
